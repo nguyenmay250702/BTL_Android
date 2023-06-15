@@ -55,6 +55,14 @@ public class TrangChuActivity  extends AppCompatActivity {
         GV.setAdapter(adapter);
     }
     private void setClick(){
+        //Trang người dùng
+        btn_nguoiDung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(TrangChuActivity.this, NguoiDungActivity.class);
+                startActivity(intent);
+            }
+        });
         //Xem bài viết
         btn_xem.setOnClickListener(new View.OnClickListener() {
             @Override
