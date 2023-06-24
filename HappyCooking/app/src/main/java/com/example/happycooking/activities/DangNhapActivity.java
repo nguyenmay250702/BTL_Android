@@ -21,6 +21,7 @@ public class DangNhapActivity extends AppCompatActivity{
     private SQLiteDatabase SQLiteDB = null;
     private EditText ET_Email, ET_Pass;
     Button btn_nhan, btn_dk;
+    public static int ID_ND_now;
 
 
     @Override
@@ -54,6 +55,8 @@ public class DangNhapActivity extends AppCompatActivity{
                 String query = "SELECT * FROM NGUOI_DUNG WHERE email = '" + email +"' and pass = '" + pass + "'";
                 Cursor cursor = SQLiteDB.rawQuery(query,null);
                 if(cursor.getCount() != 0){
+                    cursor.moveToFirst();
+                    ID_ND_now = cursor.getInt(0);
                     Intent intent = new Intent(DangNhapActivity.this, TrangChuActivity.class);
                     startActivity(intent);
                 }else{

@@ -12,7 +12,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="7330c343-fa2a-4e50-81cb-f4f12317e806">
+    <connection id="ba17edc6-5f23-4745-8fe1-4dca05943a69">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -23,13 +23,6 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
-  </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="7330c343-fa2a-4e50-81cb-f4f12317e806" dataset="main.NGUOI_DUNG" active-filter-id="51b317e3-9551-4e50-ac72-e3ecee0617bd">
-      <filter id="51b317e3-9551-4e50-ac72-e3ecee0617bd" name="0" temporary="false" custom-name="false" type="basic" join-type="AND">
-        <condition column="id" operator="&gt;=" value="0" active="true" />
-      </filter>
-    </filter-actions>
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -48,7 +41,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="7330c343-fa2a-4e50-81cb-f4f12317e806" active="true" signed="true">
+      <connection id="ba17edc6-5f23-4745-8fe1-4dca05943a69" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -65,7 +58,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="D:\GD1\HappyCooking" schema="main" />
+            <file path="D:\SQLite\HAPPY_COOKING" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

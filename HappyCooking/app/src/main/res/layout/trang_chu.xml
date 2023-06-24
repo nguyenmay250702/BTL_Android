@@ -23,10 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/LinearLayout_control">
+
             <GridView
+                android:id="@+id/GridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/GridView"/>
+                android:layout_centerInParent="true" />z
             <LinearLayout
                 android:id="@+id/LL_control"
                 android:layout_width="wrap_content"

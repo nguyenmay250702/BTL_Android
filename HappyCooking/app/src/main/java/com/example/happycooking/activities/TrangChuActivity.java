@@ -1,13 +1,20 @@
 package com.example.happycooking.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happycooking.DAO.BaiVietDAO;
@@ -21,7 +28,8 @@ import java.util.List;
 public class TrangChuActivity  extends AppCompatActivity {
     GridView GV;
     ImageButton btn_BaiViet, btn_nguoiDung,btn_xem, btn_them, btn_sua, btn_xoa;
-    BaiVietAdapter adapter;
+    BaiVietAdapter adapter ;
+    BaiViet BVct = null;
     ArrayList<BaiViet> bvArrayList;
 
     Intent intent;
@@ -63,14 +71,19 @@ public class TrangChuActivity  extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         //Xem bài viết
         btn_xem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                intent = new Intent(TrangChuActivity.this, ThemBVActivity.class);
-                intent.putExtra("key_action", "XEM");
-                startActivity(intent);
+                if(adapter.ID_BV_CT != -1){
+                    intent = new Intent(TrangChuActivity.this, ThemBVActivity.class);
+                    intent.putExtra("key_action", "XEM");
+                    intent.putExtra("key_ID", adapter.ID_BV_CT);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(TrangChuActivity.this, "Bạn chưa chọn bài viết để xem!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //Thêm bài viết

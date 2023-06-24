@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.core.database.sqlite.SQLiteDatabaseKt;
+import androidx.lifecycle.viewmodel.CreationExtras;
 
 import com.example.happycooking.database.database;
 import com.example.happycooking.models.BaiViet;
@@ -24,23 +25,24 @@ public class BaiVietDAO {
         this.db = this.database.open(); //cho phép ghi dữ liệu vào database
     }
 
-    //thêm dữ liệu
-    public boolean InsertBV(BaiViet BV){
-        ContentValues contentValues = new ContentValues(); //tạo đối tượng chứa dữ liệu
-        //đưa dữ liệu vào đối tượng chứa
-        contentValues.put("ID", String.valueOf(BV.getID()));
-        contentValues.put("ID_ND", BV.getID_ND());
-        contentValues.put("TenBV", BV.getTenBV());
-        contentValues.put("MoTa", BV.getMoTa());
-        contentValues.put("TacGia", BV.getTacGia());
-        contentValues.put("LinkVD", BV.getLinkVD());
+    //Lấy dữ liệu theo bản ID
+    public BaiViet getByID(int ID){
+        Cursor cursor = db.query(database.TB_BAIVIET, null, "ID = ?", new String[]{String.valueOf(ID)},null,null,null);
 
-        //thực thi insert
-        long kq = db.insert(database.TB_BAIVIET, null, contentValues);  // trả về số dòng được chèn thành công
-        if(kq <= 0) return false;
-        else return true;
+        BaiViet BV1 = new BaiViet();
+        if (cursor.moveToFirst()) {
+            BV1.setID(cursor.getInt(cursor.getColumnIndexOrThrow("ID")));
+            BV1.setID_ND(cursor.getInt(cursor.getColumnIndexOrThrow("ID_ND")));
+            BV1.setTenBV(cursor.getString(cursor.getColumnIndexOrThrow("TenBV")));
+            BV1.setMoTa(cursor.getString(cursor.getColumnIndexOrThrow("MoTa")));
+            BV1.setTacGia(cursor.getString(cursor.getColumnIndexOrThrow("TacGia")));
+            BV1.setLinkVD(cursor.getString(cursor.getColumnIndexOrThrow("LinkVD")));
+        }
+        cursor.close();
+        return BV1;
     }
 
+    //Lấy dữ tất cả liệu
     public ArrayList<BaiViet> getAll(){
         ArrayList<BaiViet> List = new ArrayList<>();
 
@@ -61,5 +63,23 @@ public class BaiVietDAO {
         }
         cursor.close();
         return List;
+    }
+
+
+    //thêm dữ liệu
+    public boolean InsertBV(BaiViet BV){
+        ContentValues contentValues = new ContentValues(); //tạo đối tượng chứa dữ liệu
+        //đưa dữ liệu vào đối tượng chứa
+//        contentValues.put("ID", String.valueOf(BV.getID()));
+        contentValues.put("ID_ND", BV.getID_ND());
+        contentValues.put("TenBV", BV.getTenBV());
+        contentValues.put("MoTa", BV.getMoTa());
+        contentValues.put("TacGia", BV.getTacGia());
+        contentValues.put("LinkVD", BV.getLinkVD());
+
+        //thực thi insert
+        long kq = db.insert(database.TB_BAIVIET, null, contentValues);  // trả về số dòng được chèn thành công
+        if(kq <= 0) return false;
+        else return true;
     }
 }

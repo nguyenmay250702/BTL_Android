@@ -4,8 +4,7 @@ public class BaiViet {
     private int ID, ID_ND;
     private String TenBV, MoTa, TacGia ,LinkVD;
     public BaiViet(){}
-    public BaiViet(int MaBV, int MaND, String tenBV, String moTa, String tacGia, String linkVD) {
-        ID = MaBV;
+    public BaiViet(int MaND, String tenBV, String moTa, String tacGia, String linkVD) {
         ID_ND = MaND;
         TenBV = tenBV;
         MoTa = moTa;
