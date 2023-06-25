@@ -50,6 +50,7 @@ public class ThemBVActivity extends AppCompatActivity {
 
     BaiVietAdapter adapter = null;
     BaiViet BV=null;
+    int ID_BV;
 
     Context context = null;
     @Override
@@ -61,16 +62,7 @@ public class ThemBVActivity extends AppCompatActivity {
         anhXa();
         setUp();
         setClick();
-
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if(requestCode==111 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//            btn_camMeRa.setEnabled(true);
-//        }
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -78,7 +70,6 @@ public class ThemBVActivity extends AppCompatActivity {
         if(requestCode==1111){
             // Lưu video vào bộ nhớ trong của ứng dụng
             this.VideoURI = saveVideoToInternalStorage(data.getData());
-//            this.VideoURI = getRealPathFromUri(data.getData());
             videoView.setVideoURI(data.getData());
             videoView.start();
         }
@@ -105,10 +96,7 @@ public class ThemBVActivity extends AppCompatActivity {
         }
     }
 
-
-    private void init(){
-
-    }
+    private void init(){}
 
     private void anhXa(){
         btn_camMeRa = findViewById(R.id.btn_camMeRa);
@@ -120,11 +108,11 @@ public class ThemBVActivity extends AppCompatActivity {
         videoView = findViewById(R.id.VideoView);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String key = extras.getString("key_action");
-            key_action = key;
+            key_action = extras.getString("key_action");
+            ID_BV = extras.getInt("key_ID");
 
             BaiVietDAO BVDAO = new BaiVietDAO(ThemBVActivity.this);
-            BV = BVDAO.getByID(extras.getInt("key_ID"));
+            BV = BVDAO.getByID(ID_BV);
         }
     }
 
@@ -132,13 +120,13 @@ public class ThemBVActivity extends AppCompatActivity {
         MediaController mediaController = new MediaController(this);
         videoView.setMediaController(mediaController);
         mediaController.setAnchorView(videoView);
+
         if(key_action.equals("XEM")){
             btn_luu.setVisibility(View.GONE);
             btn_camMeRa.setVisibility(View.GONE);
             ET_TenBV.setEnabled(false);
             ET_MoTa.setEnabled(false);
             ET_TacGia.setEnabled(false);
-
 
             //Thiết lập dữ liệu hiển thị lên các control tương ứng
             videoView.setVideoURI(Uri.parse(BV.getLinkVD()));
@@ -148,18 +136,17 @@ public class ThemBVActivity extends AppCompatActivity {
             ET_MoTa.setText(BV.getMoTa());
         }
         else if(key_action.equals("THEM")){
-//            btn_camMeRa.setEnabled(false);
-//            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},111);
-//            }
-//            else btn_camMeRa.setEnabled(true);
-
-            //
 
         }else if(key_action.equals("SUA")){
+            VideoURI = BV.getLinkVD();
 
+            //Thiết lập dữ liệu hiển thị lên các control tương ứng
+            videoView.setVideoURI(Uri.parse(BV.getLinkVD()));
+            videoView.start();
+            ET_TenBV.setText(BV.getTenBV());
+            ET_TacGia.setText(BV.getTacGia());
+            ET_MoTa.setText(BV.getMoTa());
         }
-
     }
 
     private void setClick(){
@@ -209,14 +196,20 @@ public class ThemBVActivity extends AppCompatActivity {
                             intent = new Intent(ThemBVActivity.this, TrangChuActivity.class);
                             startActivity(intent);
                         }else{
-                            Toast.makeText(ThemBVActivity.this, "Thêm bài học thất bại!\n Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ThemBVActivity.this, "Thêm bài viết thất bại!\n Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
                         }
                     } else if (key_action.equals("SUA")) {  //trạng thái Update
-
+                        BaiViet BV = new BaiViet(DangNhapActivity.ID_ND_now, ET_TenBV.getText().toString(), ET_MoTa.getText().toString(), ET_TacGia.getText().toString(), VideoURI);
+                        BaiVietDAO BVDAO = new BaiVietDAO(ThemBVActivity.this);
+                        if(BVDAO.UpdateBV(BV,ID_BV)){
+                            intent = new Intent(ThemBVActivity.this, TrangChuActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(ThemBVActivity.this, "Sửa bài viết thất bại!\n Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
         });
-
     }
 }

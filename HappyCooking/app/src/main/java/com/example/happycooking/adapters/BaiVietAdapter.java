@@ -65,19 +65,19 @@ public class BaiVietAdapter extends ArrayAdapter<BaiViet> {
             VideoView videoView = convertView.findViewById(R.id.videoView);
 
             // lấy dữ liệu lên các control
+            TV_TenBV.setText(BV.getTenBV());
 //            File file = new File(BV.getLinkVD());
 //            if (file.exists()) {
                 videoView.setVideoURI(Uri.parse(BV.getLinkVD()));
                 videoView.start();
 //            }
-            TV_TenBV.setText(BV.getTenBV());
+
 
             // gán id của bài viết vào tag của VideoView
             videoView.setTag(BV.getID());
-
             LinearLayout item_BV = convertView.findViewById(R.id.item_BV);
 
-
+            //khi click vào video thì đổi màu nền
             videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,7 +101,6 @@ public class BaiVietAdapter extends ArrayAdapter<BaiViet> {
                     }
                 }
             });
-
         }
         return convertView;
     }

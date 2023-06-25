@@ -65,12 +65,10 @@ public class BaiVietDAO {
         return List;
     }
 
-
-    //thêm dữ liệu
+    //thêm
     public boolean InsertBV(BaiViet BV){
         ContentValues contentValues = new ContentValues(); //tạo đối tượng chứa dữ liệu
         //đưa dữ liệu vào đối tượng chứa
-//        contentValues.put("ID", String.valueOf(BV.getID()));
         contentValues.put("ID_ND", BV.getID_ND());
         contentValues.put("TenBV", BV.getTenBV());
         contentValues.put("MoTa", BV.getMoTa());
@@ -79,6 +77,30 @@ public class BaiVietDAO {
 
         //thực thi insert
         long kq = db.insert(database.TB_BAIVIET, null, contentValues);  // trả về số dòng được chèn thành công
+        if(kq <= 0) return false;
+        else return true;
+    }
+
+    //Sửa
+    public boolean UpdateBV(BaiViet BV, int ID){
+        ContentValues contentValues = new ContentValues(); //tạo đối tượng chứa dữ liệu
+        //đưa dữ liệu vào đối tượng chứa
+        contentValues.put("ID_ND", BV.getID_ND());
+        contentValues.put("TenBV", BV.getTenBV());
+        contentValues.put("MoTa", BV.getMoTa());
+        contentValues.put("TacGia", BV.getTacGia());
+        contentValues.put("LinkVD", BV.getLinkVD());
+
+        //thực thi update
+        long kq = db.update(database.TB_BAIVIET, contentValues, "ID = ?", new String[]{String.valueOf(ID)});  // trả về số dòng được chèn thành công
+        if(kq <= 0) return false;
+        else return true;
+    }
+
+    //Xóa
+    public boolean DeleteBV(int ID){
+        ContentValues contentValues = new ContentValues();
+        long kq = db.delete(database.TB_BAIVIET,"ID = ?", new String[]{String.valueOf(ID)});
         if(kq <= 0) return false;
         else return true;
     }

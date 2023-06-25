@@ -86,6 +86,7 @@ public class TrangChuActivity  extends AppCompatActivity {
                 }
             }
         });
+
         //Thêm bài viết
         btn_them.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,5 +97,64 @@ public class TrangChuActivity  extends AppCompatActivity {
             }
         });
 
+        //Sửa BV
+        btn_sua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adapter.ID_BV_CT != -1){
+                    intent = new Intent(TrangChuActivity.this, ThemBVActivity.class);
+                    intent.putExtra("key_action", "SUA");
+                    intent.putExtra("key_ID", adapter.ID_BV_CT);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(TrangChuActivity.this, "Bạn chưa chọn bài viết để sửa!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Xóa BV
+        btn_xoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adapter.ID_BV_CT != -1){
+                    // Hiển thị hộp thoại xác nhận xóa
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TrangChuActivity.this);
+                    builder.setMessage("Bạn có muốn xóa bài viết không?");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton(
+                            "Có",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Thực hiện xóa bản ghi
+                                    BaiVietDAO BVDAO = new BaiVietDAO(TrangChuActivity.this);
+                                    if(BVDAO.DeleteBV(adapter.ID_BV_CT)){
+                                        //load lại trang
+                                        recreate();
+
+                                        Toast.makeText(TrangChuActivity.this, "Xóa bài viết thành công!", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(TrangChuActivity.this, "Xóa bài viết thất bại!\n Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                    builder.setNegativeButton(
+                            "Không",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Không thực hiện xóa bản ghi
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else{
+                    Toast.makeText(TrangChuActivity.this, "Bạn chưa chọn bài viết để xóa!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
