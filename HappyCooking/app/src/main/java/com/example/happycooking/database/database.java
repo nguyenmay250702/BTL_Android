@@ -26,16 +26,18 @@ public class database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //bảng người dùng
         String create_tb_ND = " CREATE TABLE " + TB_NGUOIDUNG
-                            + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email varchar(225) not null,  pass nvarchar(225) not null)";
-        String insert_tb_ND = "INSERT INTO NGUOI_DUNG(email,pass) VALUES ('nguyenmay308@gmail.com', '250702')";
+                + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email varchar(225) not null,  pass nvarchar(225) not null, linkIMG text)";
+        String insert_tb_ND = "INSERT INTO NGUOI_DUNG(email,pass, linkIMG) "
+                + "VALUES ('nguyenmay308@gmail.com', '250702', '@drawable/may'), "
+                + "('nguyenhongthuong2002@gmail.com', '123456', '@drawable/thuong')";
 
         //bảng bài viết
         String create_tb_BV = " CREATE TABLE " + TB_BAIVIET
-                            + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ID_ND INTEGER, TenBV NVARCHAR(50), MoTa text, TacGia NVARCHAR(50), LinkVD text)";
+                + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, ID_ND INTEGER, TenBV NVARCHAR(50), MoTa text, TacGia NVARCHAR(50), LinkVD text)";
 
         String insert_tb_BV = "INSERT INTO BAI_VIET(ID, ID_ND, TenBV, MoTa, TacGia, LinkVD) "
-                            + " VALUES (0, 0, 'Dau xào', null, null, 'android.resource://" + context.getPackageName() + "/"+R.raw.dau_xao +"')"
-                            + ", (1, 0, 'Trứng chiên', null, null, 'android.resource://" + context.getPackageName() + "/"+R.raw.trung_chien +"')";
+                + " VALUES (0, 0, 'Dau xào', null, null, 'android.resource://" + context.getPackageName() + "/"+R.raw.dau_xao +"')"
+                + ", (1, 0, 'Trứng chiên', null, null, 'android.resource://" + context.getPackageName() + "/"+R.raw.trung_chien +"')";
 
         //thực thi
         db.execSQL(create_tb_ND);

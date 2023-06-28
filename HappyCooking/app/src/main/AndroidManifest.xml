@@ -33,6 +33,7 @@
         <activity android:name=".activities.TrangChuActivity" />
         <activity android:name=".activities.ThemBVActivity" />
         <activity android:name=".activities.NguoiDungActivity" />
+        <activity android:name=".activities.ThemNDActivity" />
 
 
     </application>
