@@ -5,8 +5,7 @@ public class NguoiDung {
     private String email, pass, linkIMG;
 
     public NguoiDung(){};
-    public NguoiDung(int ID, String email, String pass, String linkIMG) {
-        this.ID = ID;
+    public NguoiDung(String email, String pass, String linkIMG) {
         this.email = email;
         this.pass = pass;
         this.linkIMG = linkIMG;

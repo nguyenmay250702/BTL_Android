@@ -24,7 +24,6 @@ public class NguoiDungActivity extends AppCompatActivity {
     ImageButton btn_BaiViet, btn_nguoiDung, btn_xem, btn_them, btn_sua, btn_xoa;
     Intent intent;
     NguoiDungAdapter adapter ;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +34,7 @@ public class NguoiDungActivity extends AppCompatActivity {
         setUp();
         setClick();
     }
+    
 
     private void init(){
         NguoiDungDAO NDDAO = new NguoiDungDAO(this);
@@ -79,6 +79,30 @@ public class NguoiDungActivity extends AppCompatActivity {
             }
         });
 
+        //Thêm bài viết
+        btn_them.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(NguoiDungActivity.this, ThemNDActivity.class);
+                intent.putExtra("key_action", "THEM");
+                startActivity(intent);
+            }
+        });
+
+        //Sửa BV
+        btn_sua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adapter.ID_ND_CT != -1){
+                    intent = new Intent(NguoiDungActivity.this, ThemNDActivity.class);
+                    intent.putExtra("key_action", "SUA");
+                    intent.putExtra("key_ID", adapter.ID_ND_CT);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(NguoiDungActivity.this, "Bạn chưa chọn tài khoản để sửa!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //Xóa BV
         btn_xoa.setOnClickListener(new View.OnClickListener() {
