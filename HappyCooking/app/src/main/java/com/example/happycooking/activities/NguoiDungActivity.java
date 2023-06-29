@@ -34,7 +34,7 @@ public class NguoiDungActivity extends AppCompatActivity {
         setUp();
         setClick();
     }
-    
+
 
     private void init(){
         NguoiDungDAO NDDAO = new NguoiDungDAO(this);

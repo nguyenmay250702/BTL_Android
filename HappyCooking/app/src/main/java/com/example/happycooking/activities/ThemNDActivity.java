@@ -3,6 +3,7 @@ package com.example.happycooking.activities;
 import com.bumptech.glide.Glide;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -99,6 +101,13 @@ public class ThemNDActivity extends AppCompatActivity {
 
         // Trả về đường dẫn của ảnh đã lưu
         return file.getAbsolutePath();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==111 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            btn_camMeRa.setEnabled(true);
+        }
     }
     private void init(){}
 
