@@ -19,28 +19,85 @@
             android:layout_height="match_parent">
 
             <!-- Các thành phần khác của RelativeLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TK"
+                android:background="#114E6A"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/TV_LichSu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="Lịch sử video đã xem"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"
+                    android:visibility="gone"
+                    android:padding="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/LN_search">
+                    <EditText
+                        android:id="@+id/ET_TimKiem"
+                        android:inputType="text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textSize="20dp"/>
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/search"
+                        android:scaleType="centerInside"
+                        android:background="#00FFFFFF"
+                        android:padding="10dp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/LinearLayout_control">
+            android:layout_above="@+id/LinearLayout_control"
+            android:layout_below="@+id/TK">
 
             <GridView
                 android:id="@+id/GridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true" />z
+                android:layout_centerInParent="true" />
             <LinearLayout
                 android:id="@+id/LL_control"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <ImageButton
+                    android:id="@+id/btn_LichSu"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/time"
+                    android:contentDescription="null"
+                    />
+                <ImageButton
                     android:id="@+id/btn_xem"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
@@ -50,7 +107,7 @@
                 <ImageButton
                     android:id="@+id/btn_them"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
@@ -60,7 +117,7 @@
                 <ImageButton
                     android:id="@+id/btn_sua"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
@@ -70,7 +127,7 @@
                 <ImageButton
                     android:id="@+id/btn_xoa"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
@@ -109,6 +166,15 @@
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/user"
+                    android:contentDescription="null"
+                    />
+                <ImageButton
+                    android:id="@+id/btn_dangXuat"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/power_on"
                     android:contentDescription="null"
                     />
             </LinearLayout>

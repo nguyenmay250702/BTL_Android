@@ -77,7 +77,6 @@ public class DangKyActivity extends AppCompatActivity {
                 }else{
 
                 }
-//                SQLiteDB.close();
             }
         });
 

@@ -1,7 +1,9 @@
 package com.example.happycooking.models;
 
+import java.util.Date;
+
 public class BaiViet {
-    private int ID, ID_ND;
+    private int ID, ID_ND, isXem;
     private String TenBV, MoTa, TacGia ,LinkVD;
     public BaiViet(){}
     public BaiViet(int MaND, String tenBV, String moTa, String tacGia, String linkVD) {
@@ -57,5 +59,13 @@ public class BaiViet {
 
     public void setLinkVD(String linkVD) {
         LinkVD = linkVD;
+    }
+
+    public int getIsXem() {
+        return isXem;
+    }
+
+    public void setIsXem(int isXem) {
+        this.isXem = isXem;
     }
 }

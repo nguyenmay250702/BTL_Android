@@ -109,6 +109,16 @@
                     app:srcCompat="@drawable/user"
                     android:contentDescription="null"
                     />
+                <ImageButton
+                    android:id="@+id/btn_dangXuat"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/power_on"
+                    android:contentDescription="null"
+                    />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

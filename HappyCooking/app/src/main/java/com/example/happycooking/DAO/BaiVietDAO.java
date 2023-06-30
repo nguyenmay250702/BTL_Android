@@ -11,7 +11,9 @@ import androidx.lifecycle.viewmodel.CreationExtras;
 import com.example.happycooking.database.database;
 import com.example.happycooking.models.BaiViet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BaiVietDAO {
@@ -43,11 +45,11 @@ public class BaiVietDAO {
     }
 
     //Lấy dữ tất cả liệu
-    public ArrayList<BaiViet> getAll(){
+    public ArrayList<BaiViet> getAll(String selection, String[] selectionArgs){
         ArrayList<BaiViet> List = new ArrayList<>();
 
         //tạo con trỏ đọc dữ liệu bảng bài viết
-        Cursor cursor = db.query(database.TB_BAIVIET, null, null,null,null,null,null);
+        Cursor cursor = db.query(database.TB_BAIVIET, null, selection,selectionArgs,null,null,null);
         cursor.moveToFirst(); //di chuyển con trỏ từ bản ghi đầu tiên
         while (!cursor.isAfterLast()) // nếu chưa đến bản ghi cuối cùng thì thực hiện các cv tiếp theo
         {
@@ -82,14 +84,16 @@ public class BaiVietDAO {
     }
 
     //Sửa
-    public boolean UpdateBV(BaiViet BV, int ID){
+    public boolean UpdateBV(BaiViet BV, int ID, boolean isUpdate,int isXem){
         ContentValues contentValues = new ContentValues(); //tạo đối tượng chứa dữ liệu
+
         //đưa dữ liệu vào đối tượng chứa
         contentValues.put("ID_ND", BV.getID_ND());
         contentValues.put("TenBV", BV.getTenBV());
         contentValues.put("MoTa", BV.getMoTa());
         contentValues.put("TacGia", BV.getTacGia());
         contentValues.put("LinkVD", BV.getLinkVD());
+        if(isUpdate == true) contentValues.put("isXem", isXem);
 
         //thực thi update
         long kq = db.update(database.TB_BAIVIET, contentValues, "ID = ?", new String[]{String.valueOf(ID)});  // trả về số dòng được chèn thành công

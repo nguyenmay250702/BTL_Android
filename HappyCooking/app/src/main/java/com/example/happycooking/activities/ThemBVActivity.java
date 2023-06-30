@@ -1,34 +1,28 @@
 package com.example.happycooking.activities;
 
-import android.Manifest;
 import android.content.Context;
-import android.database.Cursor;
-import android.media.MediaPlayer;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.happycooking.DAO.BaiVietDAO;
+import android.Manifest;
 import com.example.happycooking.R;
 import com.example.happycooking.adapters.BaiVietAdapter;
 import com.example.happycooking.models.BaiViet;
@@ -38,7 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class ThemBVActivity extends AppCompatActivity {
     Intent intent;
@@ -56,7 +50,7 @@ public class ThemBVActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.from_bv);
+        setContentView(R.layout.form_bv);
 
         init();
         anhXa();
@@ -96,6 +90,13 @@ public class ThemBVActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==111 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            btn_camMeRa.setEnabled(true);
+        }
+    }
     private void init(){}
 
     private void anhXa(){
@@ -134,9 +135,23 @@ public class ThemBVActivity extends AppCompatActivity {
             ET_TenBV.setText(BV.getTenBV());
             ET_TacGia.setText(BV.getTacGia());
             ET_MoTa.setText(BV.getMoTa());
+
+            //Cập nhật bài viết đã xem vào lịch sử xem
+            VideoURI = BV.getLinkVD();
+//            Date dateValue = new Date();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String datetimeString = dateFormat.format(dateValue);
+
+            BaiViet BV = new BaiViet(DangNhapActivity.ID_ND_now, ET_TenBV.getText().toString(), ET_MoTa.getText().toString(), ET_TacGia.getText().toString(), VideoURI);
+            BaiVietDAO BVDAO = new BaiVietDAO(ThemBVActivity.this);
+            BVDAO.UpdateBV(BV,ID_BV, true,1);
         }
         else if(key_action.equals("THEM")){
-
+            btn_camMeRa.setEnabled(false);
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},111);
+            }
+            else btn_camMeRa.setEnabled(true);
         }else if(key_action.equals("SUA")){
             VideoURI = BV.getLinkVD();
 
@@ -201,7 +216,7 @@ public class ThemBVActivity extends AppCompatActivity {
                     } else if (key_action.equals("SUA")) {  //trạng thái Update
                         BaiViet BV = new BaiViet(DangNhapActivity.ID_ND_now, ET_TenBV.getText().toString(), ET_MoTa.getText().toString(), ET_TacGia.getText().toString(), VideoURI);
                         BaiVietDAO BVDAO = new BaiVietDAO(ThemBVActivity.this);
-                        if(BVDAO.UpdateBV(BV,ID_BV)){
+                        if(BVDAO.UpdateBV(BV,ID_BV, false,0)){
                             intent = new Intent(ThemBVActivity.this, TrangChuActivity.class);
                             startActivity(intent);
                         }else{

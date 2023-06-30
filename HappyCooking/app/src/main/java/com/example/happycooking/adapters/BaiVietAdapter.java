@@ -1,5 +1,6 @@
 package com.example.happycooking.adapters;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
@@ -9,7 +10,9 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,19 +71,24 @@ public class BaiVietAdapter extends ArrayAdapter<BaiViet> {
             TV_TenBV.setText(BV.getTenBV());
 //            File file = new File(BV.getLinkVD());
 //            if (file.exists()) {
-                videoView.setVideoURI(Uri.parse(BV.getLinkVD()));
-                videoView.start();
+            videoView.setVideoURI(Uri.parse(BV.getLinkVD()));
+            videoView.start();
 //            }
 
 
             // gán id của bài viết vào tag của VideoView
             videoView.setTag(BV.getID());
             LinearLayout item_BV = convertView.findViewById(R.id.item_BV);
+            EditText ET_TimKiem = convertView.findViewById(R.id.ET_TimKiem);
+
 
             //khi click vào video thì đổi màu nền
             videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    InputMethodManager imm = (InputMethodManager) ct.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                     ID_BV_CT = (int) v.getTag();
 
                     // Cập nhật trạng thái đã chọn của VideoView
