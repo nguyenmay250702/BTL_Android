@@ -16,6 +16,9 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,16 +61,39 @@ public class ThemBVActivity extends AppCompatActivity {
         setClick();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1111){
-            // Lưu video vào bộ nhớ trong của ứng dụng
-            this.VideoURI = saveVideoToInternalStorage(data.getData());
-            videoView.setVideoURI(data.getData());
-            videoView.start();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode==1111){
+//            // Lưu video vào bộ nhớ trong của ứng dụng
+//            this.VideoURI = saveVideoToInternalStorage(data.getData());
+//            videoView.setVideoURI(data.getData());
+//            videoView.start();
+//        }
+//    }
+// Phương thức để xử lý kết quả trả về từ camera
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode == RESULT_OK) {
+////            Uri videoUri = data.getData();
+////            saveVideoToInternalStorage(videoUri);
+//            // Lưu video vào bộ nhớ trong của ứng dụng
+//            this.VideoURI = saveVideoToInternalStorage(data.getData());
+//            videoView.setVideoURI(data.getData());
+//            videoView.start();
+//        }
+//    }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null){
+                    this.VideoURI = saveVideoToInternalStorage(result.getData().getData());
+                    videoView.setVideoURI(result.getData().getData());
+                    videoView.start();
+                }
+            }
+    );
+
     private String saveVideoToInternalStorage(Uri videoUri) {
         String videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
         String videoFolderPath = getFilesDir().getAbsolutePath() + "/videos";
@@ -164,6 +190,8 @@ public class ThemBVActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void setClick(){
         //nút quay lại trang chủ
         btn_quayLai.setOnClickListener(new View.OnClickListener() {
@@ -177,8 +205,8 @@ public class ThemBVActivity extends AppCompatActivity {
         btn_camMeRa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                startActivityForResult(i,1111);
+                Intent i1 = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                activityResultLauncher.launch(i1);
             }
         });
 
